@@ -58,7 +58,7 @@ def estimate_loss():
       X, Y = get_batch(split)
       logits, loss = model(X, Y)
       losses[k] = loss.iten()
-    out(split) = losses.mean()
+    out[split] = losses.mean()
   model.train()
   return out
 

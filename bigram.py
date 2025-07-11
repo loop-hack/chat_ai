@@ -1,3 +1,4 @@
+from webbrowser import get
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
@@ -15,8 +16,6 @@ eval_iters = 200
 
 
 torch.manual_seed(1337)
-
-# dataset to train on. !wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
 
 # read it in to inspect it
 with open('input.txt', 'r', encoding='utf-8') as f:
@@ -57,7 +56,7 @@ def estimate_loss():
     for k in range(eval_iters):
       X, Y = get_batch(split)
       logits, loss = model(X, Y)
-      losses[k] = loss.iten()
+      losses[k] = loss.item()
     out[split] = losses.mean()
   model.train()
   return out
@@ -119,4 +118,4 @@ for iter in range(max_iters):
   optimizer.step()
 
 context = torch.zeros((1, 1), dtype = torch.long, device=device)
-print(decode(m.generate(context, max_new_token=500)[0].tolist()))
+print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
